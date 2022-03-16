@@ -1,9 +1,32 @@
 #version 330
+
+// Name: sunwoo.lee
+// Assignment name: Rect Shape
+// Course name: CS250
+// Term: 2022 Spring
+
 precision mediump float;
+
+uniform vec2 u_resolution;
+
+float rectshape(vec2 position,vec2 scale){
+    scale=vec2(.5)-scale*.5;
+    vec2 shaper=vec2(step(scale.x,position.x),step(scale.y,position.y));
+    shaper*=vec2(step(scale.x,1.-position.x),step(scale.y,1.-position.y));
+    return shaper.x*shaper.y;
+}
 
 out vec4 FragColor;
 
 void main()
 {
-    FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    vec2 position=gl_FragCoord.xy/u_resolution;
+    
+    vec3 color=vec3(0.);
+    
+    float rectangle=rectshape(position,vec2(.3,.3));
+    
+    color=vec3(rectangle);
+    
+    FragColor=vec4(color,1.);
 }
