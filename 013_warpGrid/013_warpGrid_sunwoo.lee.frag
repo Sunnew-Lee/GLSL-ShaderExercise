@@ -16,10 +16,10 @@ void main()
     vec2 coord=gl_FragCoord.xy/u_resolution;
     vec3 color=vec3(0.);
     
-    color+=sin(coord.x*cos(u_time/60.)*60.)+sin(coord.y*cos(u_time/60.)*10.);
-    color+=cos(coord.y*sin(u_time/30.)*10.)+cos(coord.x*sin(u_time/20.)*10.);
+    color+=sin(coord.x*cos(u_time)*20.)+cos(coord.y*cos(u_time)*10.);
+    color*=cos(coord.y*sin(u_time)*10.)+sin(coord.x*sin(u_time)*20.);
     
-    color*=sin(u_time/10.)*.5;
-    
-    FragColor=vec4(color,1.);
+    color*=sin(u_time * 0.5)*50.;
+
+    FragColor=vec4(color * mix(vec3(0.0157, 0.0, 1.0),vec3(0.2353, 1.0, 0.0),(0.5*(sin(u_time*5.)+1.0))),1.);
 }
