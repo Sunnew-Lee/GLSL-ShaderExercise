@@ -15,12 +15,16 @@ uniform sampler2D u_tex0;
 
 out vec4 FragColor;
 
+mat2 rotate(float angle){
+    return mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+}
+
 void main()
 {
-    vec2 coord = gl_FragCoord.xy / u_resolution;
-    vec3 color = vec3(0.0);
-
-    coord.x+=sin(u_time);
+    vec2 coord = gl_FragCoord.xy / u_resolution * 3;
+    coord -=vec2(1.5);
+    coord = rotate(sin(u_time))*coord;
+    coord +=vec2(1.5);
 
     FragColor = texture2D(u_tex0,coord);
 }

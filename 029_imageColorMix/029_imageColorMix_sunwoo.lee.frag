@@ -1,7 +1,7 @@
 #version 330
 
 // // Name: sunwoo.lee
-// // Assignment name: Image Manipulate
+// // Assignment name: Image Color Mix
 // // Course name: CS250
 // // Term: 2022 Spring
 
@@ -18,11 +18,14 @@ out vec4 FragColor;
 void main()
 {
     vec2 coord = gl_FragCoord.xy / u_resolution;
-    vec3 color = vec3(0.0);
+    vec3 color = vec3(1.0);
 
     vec4 image = texture2D(u_tex0,coord);
-    image.r += sin(coord.x * 90.0);
-    image.r += cos(coord.y * 90.0);
+    image += sin(coord.x * 90.0 )*0.5;
+    image += cos(coord.y * 90.0 )*0.5;
 
-    FragColor = vec4(image);
+    color = mix(vec3(abs(sin(u_time*0.5))*color.r, abs(cos(u_time*0.4))*color.g,(sin(u_time*0.6)*cos(u_time*0.25))*color.b)
+    ,image.rgb,image.a);
+
+    FragColor = vec4(color,1.0);
 }
